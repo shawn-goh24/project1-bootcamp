@@ -1,0 +1,51 @@
+[
+  {
+    "id": 1,
+    "title": "Wake up, shower, leave for work",
+    "completed": false,
+    "deleted": false,
+    "labels": ["Housework", "Groceries"]
+  },
+  {
+    "id": 2,
+    "title": "Pick up kids from school",
+    "completed": false,
+    "deleted": false,
+    "labels": ["Housework", "Groceries"]
+  },
+  {
+    "id": 3,
+    "title": "dinner with family",
+    "completed": false,
+    "deleted": false,
+    "labels": []
+  },
+  {
+    "id": 4,
+    "title": "cycle training",
+    "completed": false,
+    "deleted": false,
+    "labels": []
+  },
+  {
+    "id": 5,
+    "title": "read a book",
+    "completed": false,
+    "deleted": false,
+    "labels": []
+  },
+  {
+    "id": 6,
+    "title": "practice coding",
+    "completed": false,
+    "deleted": false,
+    "labels": []
+  },
+  {
+    "id": 7,
+    "title": "relax and bedtime",
+    "completed": false,
+    "deleted": false,
+    "labels": []
+  }
+]
