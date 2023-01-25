@@ -67,12 +67,19 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function ResponsiveDrawer(props) {
-  const { window } = props;
+  // const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [selectedDrawer, setSelectedDrawer] = React.useState('Inbox')
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  const getDrawerSelection = (e) => {
+    console.log(e.target.innerText)
+    setSelectedDrawer(e.target.innerText)
+    // return e.target.innerText
+  }
 
   const drawer = (
     <div>
@@ -81,7 +88,7 @@ function ResponsiveDrawer(props) {
       <List>
         {['Inbox', 'Today', 'Upcoming'].map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={getDrawerSelection}>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
@@ -94,7 +101,7 @@ function ResponsiveDrawer(props) {
       <List>
         {['Labels', 'Completed', 'Trash'].map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={getDrawerSelection}>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
@@ -106,7 +113,9 @@ function ResponsiveDrawer(props) {
     </div>
   );
 
-  const container = window !== undefined ? () => window().document.body : undefined;
+  
+
+  // const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -150,7 +159,7 @@ function ResponsiveDrawer(props) {
       >
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
-          container={container}
+          // container={container}
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
@@ -181,7 +190,7 @@ function ResponsiveDrawer(props) {
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
         <Toolbar />
-        <Content />
+        <Content selectedDrawer={selectedDrawer}/>
       </Box>
     </Box>
   );

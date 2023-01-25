@@ -1,8 +1,8 @@
 import React from "react";
 // import TodoList from './TodoList';
-import TodoBox from './TodoBox'
-import data from '../todos.json'
+import data from '../todos.json';
 import Popup from "./Popup";
+import TodoBox from './TodoBox';
 // import { Modal, Box } from "@mui/material";
 
 
@@ -14,6 +14,7 @@ export default class Content extends React.Component {
       wordInput: '',
       openPopup: false, 
       selectedTask: [],
+      selectedList: 'Inbox'
     }
   }
 
@@ -96,27 +97,90 @@ export default class Content extends React.Component {
   }
   
 
-  
+  completedList = () => {
+    const list = this.state.list.filter((todo) => {
+      if (todo.completed) {
+        return true
+      }
+      return false
+    })
 
-  render() {
-    
-    const filteredList = this.state.list.filter((todo) => {
+    const completed = list.map((todo) => {
+      return(
+        <TodoBox key={todo.id} todo={todo} onClick={this.onTodoItemClicked}/>
+      )
+    })
+
+    return completed
+  }
+  
+  trashList = () => {
+    const list = this.state.list.filter((todo) => {
+      if (todo.deleted) {
+        return true
+      }
+      return false
+    })
+
+    const trash = list.map((todo) => {
+      return(
+        <TodoBox key={todo.id} todo={todo} onClick={this.onTodoItemClicked}/>
+      )
+    })
+
+    return trash
+  }
+
+  inboxList = () => {
+    const list = this.state.list.filter((todo) => {
       if (todo.completed === false && todo.deleted === false) {
         return true
       }
       return false
     })
 
-    const todoList = filteredList.map((todo) => {
+    const inbox = list.map((todo) => {
       return(
         <TodoBox key={todo.id} todo={todo} onClick={this.onTodoItemClicked}/>
       )
     })
 
+    return inbox
+  }
+
+  
+
+  render() {
+    
+    let { selectedDrawer } = this.props
+
+    // const filteredList = this.state.list.filter((todo) => {
+    //   if (todo.completed === false && todo.deleted === false) {
+    //     return true
+    //   }
+    //   return false
+    // })
+
+    // const todoList = filteredList.map((todo) => {
+    //   return(
+    //     <TodoBox key={todo.id} todo={todo} onClick={this.onTodoItemClicked}/>
+    //   )
+    // })
+
+    const showSelectedList = () => {
+      if (selectedDrawer === 'Inbox') {
+        return this.inboxList()
+      } else if (selectedDrawer === 'Completed') {
+        return this.completedList()
+      } else if (selectedDrawer === 'Trash') {
+        return this.trashList()
+      }
+    }
+
     return(
       <div>
-        {/* {console.log(this.state.list)} */}
-        {todoList}
+        {console.log(this.state.list)}
+        {showSelectedList()}
         <form onSubmit={this.handleSubmit}>
           <input type='text' name='wordInput' value={this.state.wordInput} onChange={this.handleChange}/>
           <input type='submit' value='Submit'/>

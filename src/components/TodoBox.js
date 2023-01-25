@@ -1,8 +1,8 @@
-import React from "react";
-import Button from '@mui/material/Button'
-import Box from '@mui/material/Box'
-import IconButton from '@mui/material/IconButton';
 import { DeleteRounded, EditRounded } from "@mui/icons-material";
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import React from "react";
 
 export default class TodoBox extends React.Component {
   render() {
