@@ -1,0 +1,12 @@
+.done {
+  border: 1px black solid;
+  height: 24px;
+  width: 24px;
+  border-radius: 100%;
+  box-shadow: 1px 1px #888888
+}
+
+.done:hover {
+  background-color: #00ADB5;
+}
+

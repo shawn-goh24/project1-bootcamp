@@ -97,13 +97,26 @@ export default class Content extends React.Component {
   }
   
 
-  completedList = () => {
+  completedList = (searchValue) => {
     const list = this.state.list.filter((todo) => {
       if (todo.completed) {
         return true
       }
       return false
     })
+
+    if (searchValue) {
+      const list2 = list.filter((todo) => {
+        return todo.title?.toLowerCase().includes(searchValue?.toLowerCase())
+      })
+
+      const search = list2.map((todo) => {
+        return(
+          <TodoBox key={todo.id} todo={todo} onClick={this.onTodoItemClicked}/>
+        )
+      })
+      return search
+    }
 
     const completed = list.map((todo) => {
       return(
@@ -114,13 +127,26 @@ export default class Content extends React.Component {
     return completed
   }
   
-  trashList = () => {
+  trashList = (searchValue) => {
     const list = this.state.list.filter((todo) => {
       if (todo.deleted) {
         return true
       }
       return false
     })
+
+    if (searchValue) {
+      const list2 = list.filter((todo) => {
+        return todo.title?.toLowerCase().includes(searchValue?.toLowerCase())
+      })
+
+      const search = list2.map((todo) => {
+        return(
+          <TodoBox key={todo.id} todo={todo} onClick={this.onTodoItemClicked}/>
+        )
+      })
+      return search
+    }
 
     const trash = list.map((todo) => {
       return(
@@ -131,13 +157,26 @@ export default class Content extends React.Component {
     return trash
   }
 
-  inboxList = () => {
+  inboxList = (searchValue) => {
     const list = this.state.list.filter((todo) => {
       if (todo.completed === false && todo.deleted === false) {
         return true
       }
       return false
     })
+
+    if (searchValue) {
+      const list2 = list.filter((todo) => {
+        return todo.title?.toLowerCase().includes(searchValue?.toLowerCase())
+      })
+
+      const search = list2.map((todo) => {
+        return(
+          <TodoBox key={todo.id} todo={todo} onClick={this.onTodoItemClicked}/>
+        )
+      })
+      return search
+    }
 
     const inbox = list.map((todo) => {
       return(
@@ -148,39 +187,27 @@ export default class Content extends React.Component {
     return inbox
   }
 
+
   
 
   render() {
     
-    let { selectedDrawer } = this.props
+    let { selectedDrawer, searchValue } = this.props
 
-    // const filteredList = this.state.list.filter((todo) => {
-    //   if (todo.completed === false && todo.deleted === false) {
-    //     return true
-    //   }
-    //   return false
-    // })
-
-    // const todoList = filteredList.map((todo) => {
-    //   return(
-    //     <TodoBox key={todo.id} todo={todo} onClick={this.onTodoItemClicked}/>
-    //   )
-    // })
-
-    const showSelectedList = () => {
+    const showSelectedList = (searchValue) => {
       if (selectedDrawer === 'Inbox') {
-        return this.inboxList()
+        return this.inboxList(searchValue)
       } else if (selectedDrawer === 'Completed') {
-        return this.completedList()
+        return this.completedList(searchValue)
       } else if (selectedDrawer === 'Trash') {
-        return this.trashList()
+        return this.trashList(searchValue)
       }
     }
 
     return(
       <div>
-        {console.log(this.state.list)}
-        {showSelectedList()}
+        {/* {console.log(this.state.list)} */}
+        {showSelectedList(searchValue)}
         <form onSubmit={this.handleSubmit}>
           <input type='text' name='wordInput' value={this.state.wordInput} onChange={this.handleChange}/>
           <input type='submit' value='Submit'/>

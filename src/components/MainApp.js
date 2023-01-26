@@ -66,10 +66,17 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+
 function ResponsiveDrawer(props) {
   // const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [selectedDrawer, setSelectedDrawer] = React.useState('Inbox')
+  const [searchValue, setSearchValue] = React.useState('')
+  
+  const handleChange = (e) => {
+    // console.log(e.target.value)
+    setSearchValue(e.target.value)
+  }
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -139,9 +146,9 @@ function ResponsiveDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' } }}>
-            LOGO
+            {selectedDrawer}
           </Typography>
-        <Search>
+          <Search onChange={handleChange}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -190,7 +197,7 @@ function ResponsiveDrawer(props) {
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
         <Toolbar />
-        <Content selectedDrawer={selectedDrawer}/>
+        <Content selectedDrawer={selectedDrawer} searchValue={searchValue}/>
       </Box>
     </Box>
   );
