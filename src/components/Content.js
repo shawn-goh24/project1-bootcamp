@@ -1,7 +1,7 @@
 import React from "react";
 // import TodoList from './TodoList';
 import data from '../todos.json';
-import Popup from "./Popup";
+import EditDialog from "./EditDialog";
 import TodoBox from './TodoBox';
 // import { Modal, Box } from "@mui/material";
 
@@ -14,7 +14,8 @@ export default class Content extends React.Component {
       wordInput: '',
       openPopup: false, 
       selectedTask: [],
-      selectedList: 'Inbox'
+      selectedList: 'Inbox',
+      openDeleteDialog: false
     }
   }
 
@@ -208,11 +209,14 @@ export default class Content extends React.Component {
       <div>
         {/* {console.log(this.state.list)} */}
         {showSelectedList(searchValue)}
-        <form onSubmit={this.handleSubmit}>
-          <input type='text' name='wordInput' value={this.state.wordInput} onChange={this.handleChange}/>
-          <input type='submit' value='Submit'/>
-        </form>
-        <Popup openPopup={this.state.openPopup} selectedTask={this.state.selectedTask} onClick={this.onTodoItemClicked} />
+        {
+          selectedDrawer === 'Completed' || selectedDrawer === 'Trash' ? '' : 
+          <form onSubmit={this.handleSubmit}>
+            <input type='text' name='wordInput' value={this.state.wordInput} onChange={this.handleChange}/>
+            <input type='submit' value='Submit'/>
+          </form>
+        }
+        <EditDialog openPopup={this.state.openPopup} selectedTask={this.state.selectedTask} onClick={this.onTodoItemClicked} />
       </div>
     )
   }

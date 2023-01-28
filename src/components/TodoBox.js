@@ -1,6 +1,6 @@
 import { DeleteRounded, EditRounded } from "@mui/icons-material";
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import React from "react";
 
@@ -10,9 +10,9 @@ export default class TodoBox extends React.Component {
   render() {
     let { todo, onClick } = this.props
 
-    const handleClick = () => {
-      console.log('I am div')
-    }
+    // const handleClick = () => {
+    //   console.log('I am div')
+    // }
 
     return(
       <Box sx={{p: 2, border: '1px dashed grey', width: '50%', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>

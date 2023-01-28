@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import TextField from '@mui/material/TextField';
 import React from "react";
 
-export default class Popup extends React.Component {
+export default class EditDialog extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
