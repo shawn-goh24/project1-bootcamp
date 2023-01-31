@@ -1,9 +1,8 @@
 import React from "react";
-// import TodoList from './TodoList';
 import data from '../todos.json';
 import EditDialog from "./EditDialog";
 import TodoBox from './TodoBox';
-// import { Modal, Box } from "@mui/material";
+import Box from '@mui/material/Box';
 
 
 export default class Content extends React.Component {
@@ -51,24 +50,16 @@ export default class Content extends React.Component {
     if (selected === 'delete') {
       const newTodos = [...this.state.list]
       const todo = newTodos.find((todo) => todo.id === id);
-      todo.deleted = true
+      todo.deleted = !todo.deleted
       this.setState({
         list: newTodos
       })
     } else if (selected === 'complete') {
       const newTodos = [...this.state.list]
       const todo = newTodos.find((todo) => todo.id === id);
-      todo.completed = true
+      todo.completed = !todo.completed
       this.setState({
         list: newTodos
-      })
-    } else if (selected === 'edit') {
-      console.log("Edit task")
-      const newTodos = [...this.state.list]
-      const todo = newTodos.find((todo) => todo.id === id)
-      this.setState({
-        openPopup: true,
-        selectedTask: todo
       })
     } else if (selected === 'done') {
       console.log("Done editting")
@@ -86,15 +77,15 @@ export default class Content extends React.Component {
         openPopup: false,
       })
     } 
-    // else if (selected === 'edit') {
-    //   console.log("Edit task")
-    //   const newTodos = [...this.state.list]
-    //   const todo = newTodos.find((todo) => todo.id === id)
-    //   this.setState({
-    //     openPopup: !this.state.openPopup,
-    //     selectedTask: todo
-    //   })
-    // }
+    else if (selected === 'edit') {
+      console.log("Edit task")
+      const newTodos = [...this.state.list]
+      const todo = newTodos.find((todo) => todo.id === id)
+      this.setState({
+        openPopup: !this.state.openPopup,
+        selectedTask: todo
+      })
+    }
   }
   
 
@@ -113,7 +104,7 @@ export default class Content extends React.Component {
 
       const search = list2.map((todo) => {
         return(
-          <TodoBox key={todo.id} todo={todo} onClick={this.onTodoItemClicked}/>
+          <TodoBox key={todo.id} todo={todo} onClick={this.onTodoItemClicked} status='completed'/>
         )
       })
       return search
@@ -121,7 +112,7 @@ export default class Content extends React.Component {
 
     const completed = list.map((todo) => {
       return(
-        <TodoBox key={todo.id} todo={todo} onClick={this.onTodoItemClicked}/>
+        <TodoBox key={todo.id} todo={todo} onClick={this.onTodoItemClicked} status='completed'/>
       )
     })
 
@@ -143,7 +134,7 @@ export default class Content extends React.Component {
 
       const search = list2.map((todo) => {
         return(
-          <TodoBox key={todo.id} todo={todo} onClick={this.onTodoItemClicked}/>
+          <TodoBox key={todo.id} todo={todo} onClick={this.onTodoItemClicked} status='delete'/>
         )
       })
       return search
@@ -151,7 +142,7 @@ export default class Content extends React.Component {
 
     const trash = list.map((todo) => {
       return(
-        <TodoBox key={todo.id} todo={todo} onClick={this.onTodoItemClicked}/>
+        <TodoBox key={todo.id} todo={todo} onClick={this.onTodoItemClicked} status='delete'/>
       )
     })
 
@@ -188,6 +179,42 @@ export default class Content extends React.Component {
     return inbox
   }
 
+  todayList = (searchValue) => {
+
+    const currDate = new Date().toLocaleDateString()
+
+    console.log(currDate)
+    
+    const list = this.state.list.filter((todo) => {
+      if (todo.date === currDate && todo.completed === false && todo.deleted === false) {
+        return true
+      }
+      return false
+    })
+
+    if (searchValue) {
+      const list2 = list.filter((todo) => {
+        return todo.title?.toLowerCase().includes(searchValue?.toLowerCase())
+      })
+
+      const search = list2.map((todo) => {
+        return(
+          <TodoBox key={todo.id} todo={todo} onClick={this.onTodoItemClicked}/>
+        )
+      })
+      return search
+    }
+
+    const today = list.map((todo) => {
+      return(
+        <TodoBox key={todo.id} todo={todo} onClick={this.onTodoItemClicked}/>
+      )
+    })
+
+    return today
+
+    
+  }
 
   
 
@@ -202,13 +229,17 @@ export default class Content extends React.Component {
         return this.completedList(searchValue)
       } else if (selectedDrawer === 'Trash') {
         return this.trashList(searchValue)
+      } else if(selectedDrawer === 'Today') {
+        return this.todayList(searchValue)
       }
     }
 
     return(
       <div>
-        {/* {console.log(this.state.list)} */}
-        {showSelectedList(searchValue)}
+        {/* {console.log(this.state.openPopup)} */}
+        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%'}}>
+          {showSelectedList(searchValue)}
+        </Box>
         {
           selectedDrawer === 'Completed' || selectedDrawer === 'Trash' ? '' : 
           <form onSubmit={this.handleSubmit}>

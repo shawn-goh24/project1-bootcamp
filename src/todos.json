@@ -4,48 +4,55 @@
     "title": "Wake up, shower, leave for work",
     "completed": true,
     "deleted": false,
-    "labels": ["Housework", "Groceries"]
+    "labels": ["Housework", "Groceries"],
+    "date": "1/31/2023"
   },
   {
     "id": 2,
     "title": "Pick up kids from school",
     "completed": false,
     "deleted": false,
-    "labels": ["Housework", "Groceries"]
+    "labels": ["Housework", "Groceries"],
+    "date": "1/31/2023"
   },
   {
     "id": 3,
     "title": "dinner with family",
     "completed": false,
     "deleted": true,
-    "labels": []
+    "labels": [],
+    "date": "1/31/2023"
   },
   {
     "id": 4,
     "title": "cycle training",
     "completed": false,
     "deleted": false,
-    "labels": []
+    "labels": [],
+    "date": "1/31/2023"
   },
   {
     "id": 5,
     "title": "read a book",
     "completed": false,
     "deleted": false,
-    "labels": []
+    "labels": [],
+    "date": "2/10/2023"
   },
   {
     "id": 6,
     "title": "practice coding",
     "completed": false,
     "deleted": false,
-    "labels": []
+    "labels": [],
+    "date": "2/10/2023"
   },
   {
     "id": 7,
     "title": "relax and bedtime",
     "completed": false,
     "deleted": false,
-    "labels": []
+    "labels": [],
+    "date": "3/4/2023"
   }
 ]
