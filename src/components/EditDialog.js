@@ -4,21 +4,39 @@ import Button from "@mui/material/Button";
 import TextField from '@mui/material/TextField';
 import React from "react";
 
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
 export default class EditDialog extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       newTitle: '',
-      newLabel: ''
+      newDate: null
     }
   }
+
 
   handleChange = (e) => {
 
     let { name, value } = e.target
 
+      this.setState({
+        [name]: value
+      })
+  }
+
+  handleDateChange = (newValue) => {
     this.setState({
-      [name]: value
+      newDate: newValue
+    })
+  }
+
+  handleReset = () => {
+    this.setState({
+      newTitle: '',
+      newDate: null
     })
   }
 
@@ -26,8 +44,20 @@ export default class EditDialog extends React.Component {
 
     const { openPopup, selectedTask, onClick } = this.props
 
+    let currDate = selectedTask.date
+    let currTitle = selectedTask.title
+
+    if (this.state.newTitle !== '') {
+      currTitle = this.state.newTitle
+    }
+
+    // if (this.state.newDate !== null) {
+    //   currDate = this.state.newDate
+    // }
+
     return(
       <Dialog open={openPopup}>
+        {/* {this.state.newDate === null ? '' : console.log(this.state.newDate['$d'].toLocaleDateString())} */}
         <DialogTitle>
           Edit Task
         </DialogTitle>
@@ -49,27 +79,34 @@ export default class EditDialog extends React.Component {
                 defaultValue={selectedTask.title}
                 variant="standard"
                 onChange={this.handleChange}
-                />
-              <TextField
-                id="standard"
-                name="newLabel"
-                label="Label"
-                defaultValue={selectedTask.labels}
-                variant="standard"
-                onChange={this.handleChange}
               />
+              <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'en'}>
+                <DesktopDatePicker
+                  label="Date desktop"
+                  value={this.state.newDate === null ? currDate : this.state.newDate}
+                  onChange={this.handleDateChange}
+                  renderInput={(params) => <TextField {...params} />}
+                  showDaysOutsideCurrentMonth
+                />
+              </LocalizationProvider>
             </div>
             <Button 
               variant="outlined" 
               color="primary" 
-              onClick={() => onClick(selectedTask.id, 'done', this.state.newTitle, this.state.newLabel)}
+              onClick={() => {
+                onClick(selectedTask.id, 'done', currTitle, this.state.newDate)
+                this.handleReset()
+              }}
             >
               Done
             </Button> 
             <Button 
               variant="contained" 
               color="error" 
-              onClick={() => onClick(selectedTask.id, 'cancel', this.state.newTitle, this.state.newLabel)}
+              onClick={() => {
+                onClick(selectedTask.id, 'cancel', currTitle, this.state.newDate)
+                this.handleReset()
+              }}
             >
               Cancel
             </Button>

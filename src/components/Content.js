@@ -9,7 +9,7 @@ export default class Content extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: [],
+      list: data,
       wordInput: '',
       openPopup: false, 
       selectedTask: [],
@@ -18,11 +18,11 @@ export default class Content extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this.setState({
-      list: data
-    })
-  }
+  // componentDidMount() {
+  //   this.setState({
+  //     list: data
+  //   })
+  // }
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -30,7 +30,8 @@ export default class Content extends React.Component {
       id: this.state.list[this.state.list.length - 1].id + 1,
       title: this.state.wordInput,
       completed: false,
-      deleted: false
+      deleted: false,
+      date: new Date().toLocaleDateString()
     };
     this.setState({
       list: [...this.state.list, newTodos],
@@ -46,7 +47,7 @@ export default class Content extends React.Component {
     })
   }
 
-  onTodoItemClicked = (id, selected, newTitle, newLabel) => {
+  onTodoItemClicked = (id, selected, newTitle, newDate) => {
     if (selected === 'delete') {
       const newTodos = [...this.state.list]
       const todo = newTodos.find((todo) => todo.id === id);
@@ -66,7 +67,9 @@ export default class Content extends React.Component {
       const newTodos = [...this.state.list]
       const todo = newTodos.find((todo) => todo.id === id)
       todo.title = newTitle
-      todo.labels = newLabel
+      if (newDate !== null) {
+        todo.date = newDate['$d'].toLocaleDateString()
+      }
       this.setState({
         openPopup: false,
         list: newTodos
@@ -183,7 +186,7 @@ export default class Content extends React.Component {
 
     const currDate = new Date().toLocaleDateString()
 
-    console.log(currDate)
+    // console.log(currDate)
     
     const list = this.state.list.filter((todo) => {
       if (todo.date === currDate && todo.completed === false && todo.deleted === false) {
@@ -216,6 +219,26 @@ export default class Content extends React.Component {
     
   }
 
+  // upcomingList = () => {
+  //   const fromTime = new Date().getTime()
+  //   const toDate = new Date()
+  //   toDate.setDate(toDate.getDate() + 7)
+
+  //   const nowTime = new Date("2023-02-01")
+
+  //   console.log(toDate.getDate())
+  //   console.log(nowTime.getDate())
+
+
+  //   // if (nowTime >= fromTime && nowTime < toTime) {
+  //   //   console.log('✅ date is between the 2 dates');
+  //   // } else {
+  //   //   console.log('⛔️ date is not in the range');
+  //   // }
+    
+    
+  // }
+
   
 
   render() {
@@ -229,14 +252,17 @@ export default class Content extends React.Component {
         return this.completedList(searchValue)
       } else if (selectedDrawer === 'Trash') {
         return this.trashList(searchValue)
-      } else if(selectedDrawer === 'Today') {
+      } else if (selectedDrawer === 'Today') {
         return this.todayList(searchValue)
-      }
+      } 
+      // else if (selectedDrawer === 'Upcoming') {
+      //   this.upcomingList()
+      // }
     }
 
     return(
       <div>
-        {/* {console.log(this.state.openPopup)} */}
+        {console.log(new Date(this.state.list[6].date))}
         <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%'}}>
           {showSelectedList(searchValue)}
         </Box>
