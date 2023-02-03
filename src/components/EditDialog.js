@@ -51,13 +51,8 @@ export default class EditDialog extends React.Component {
       currTitle = this.state.newTitle
     }
 
-    // if (this.state.newDate !== null) {
-    //   currDate = this.state.newDate
-    // }
-
     return(
       <Dialog open={openPopup}>
-        {/* {this.state.newDate === null ? '' : console.log(this.state.newDate['$d'].toLocaleDateString())} */}
         <DialogTitle>
           Edit Task
         </DialogTitle>
@@ -97,6 +92,7 @@ export default class EditDialog extends React.Component {
                 onClick(selectedTask.id, 'done', currTitle, this.state.newDate)
                 this.handleReset()
               }}
+              sx={{mr: '10px'}}
             >
               Done
             </Button> 

@@ -19,6 +19,8 @@ import Typography from '@mui/material/Typography';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
+import AddTaskRoundedIcon from '@mui/icons-material/AddTaskRounded';
+import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 
 import Content from './Content'
 
@@ -68,13 +70,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 function ResponsiveDrawer(props) {
-  // const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [selectedDrawer, setSelectedDrawer] = React.useState('Inbox')
   const [searchValue, setSearchValue] = React.useState('')
   
   const handleChange = (e) => {
-    // console.log(e.target.value)
     setSearchValue(e.target.value)
   }
 
@@ -85,7 +85,6 @@ function ResponsiveDrawer(props) {
   const getDrawerSelection = (e) => {
     console.log(e.target.innerText)
     setSelectedDrawer(e.target.innerText)
-    // return e.target.innerText
   }
 
   const drawer = (
@@ -93,7 +92,7 @@ function ResponsiveDrawer(props) {
       <Toolbar style={{backgroundColor: "#222831"}}/>
       <Divider />
       <List>
-        {['Inbox', 'Today', 'Upcoming'].map((text, index) => (
+        {['Inbox', 'Today'].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton onClick={getDrawerSelection}>
               <ListItemIcon>
@@ -106,11 +105,11 @@ function ResponsiveDrawer(props) {
       </List>
       <Divider />
       <List>
-        {['Labels', 'Completed', 'Trash'].map((text, index) => (
+        {['Completed', 'Trash'].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton onClick={getDrawerSelection}>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {index % 2 === 0 ? <AddTaskRoundedIcon /> : <DeleteForeverRoundedIcon />}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
@@ -121,9 +120,6 @@ function ResponsiveDrawer(props) {
   );
 
   
-
-  // const container = window !== undefined ? () => window().document.body : undefined;
-
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />

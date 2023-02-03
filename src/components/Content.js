@@ -3,6 +3,8 @@ import data from '../todos.json';
 import EditDialog from "./EditDialog";
 import TodoBox from './TodoBox';
 import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 
 export default class Content extends React.Component {
@@ -18,25 +20,38 @@ export default class Content extends React.Component {
     }
   }
 
-  // componentDidMount() {
-  //   this.setState({
-  //     list: data
-  //   })
-  // }
-
   handleSubmit = (e) => {
     e.preventDefault();
-    const newTodos = {
-      id: this.state.list[this.state.list.length - 1].id + 1,
-      title: this.state.wordInput,
-      completed: false,
-      deleted: false,
-      date: new Date().toLocaleDateString()
-    };
-    this.setState({
-      list: [...this.state.list, newTodos],
-      wordInput: ''
-    })
+    if (this.state.wordInput !== '') {
+      const newTodos = {
+        id: this.state.list[this.state.list.length - 1].id + 1,
+        title: this.state.wordInput,
+        completed: false,
+        deleted: false,
+        date: new Date().toLocaleDateString()
+      };
+      this.setState({
+        list: [...this.state.list, newTodos],
+        wordInput: ''
+      })
+    }
+  }
+
+  onAddTask = (e) => {
+    console.log(e.keyCode)
+    if (this.state.wordInput !== '') {
+      const newTodos = {
+        id: this.state.list[this.state.list.length - 1].id + 1,
+        title: this.state.wordInput,
+        completed: false,
+        deleted: false,
+        date: new Date().toLocaleDateString()
+      };
+      this.setState({
+        list: [...this.state.list, newTodos],
+        wordInput: ''
+      })
+    }
   }
   
   handleChange = (e) => {
@@ -185,8 +200,6 @@ export default class Content extends React.Component {
   todayList = (searchValue) => {
 
     const currDate = new Date().toLocaleDateString()
-
-    // console.log(currDate)
     
     const list = this.state.list.filter((todo) => {
       if (todo.date === currDate && todo.completed === false && todo.deleted === false) {
@@ -219,27 +232,6 @@ export default class Content extends React.Component {
     
   }
 
-  // upcomingList = () => {
-  //   const fromTime = new Date().getTime()
-  //   const toDate = new Date()
-  //   toDate.setDate(toDate.getDate() + 7)
-
-  //   const nowTime = new Date("2023-02-01")
-
-  //   console.log(toDate.getDate())
-  //   console.log(nowTime.getDate())
-
-
-  //   // if (nowTime >= fromTime && nowTime < toTime) {
-  //   //   console.log('✅ date is between the 2 dates');
-  //   // } else {
-  //   //   console.log('⛔️ date is not in the range');
-  //   // }
-    
-    
-  // }
-
-  
 
   render() {
     
@@ -255,22 +247,26 @@ export default class Content extends React.Component {
       } else if (selectedDrawer === 'Today') {
         return this.todayList(searchValue)
       } 
-      // else if (selectedDrawer === 'Upcoming') {
-      //   this.upcomingList()
-      // }
     }
 
     return(
       <div>
-        {console.log(new Date(this.state.list[6].date))}
         <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%'}}>
           {showSelectedList(searchValue)}
         </Box>
         {
           selectedDrawer === 'Completed' || selectedDrawer === 'Trash' ? '' : 
           <form onSubmit={this.handleSubmit}>
-            <input type='text' name='wordInput' value={this.state.wordInput} onChange={this.handleChange}/>
-            <input type='submit' value='Submit'/>
+            <TextField
+              required
+              id="outlined-required"
+              label="Task"
+              value={this.state.wordInput}
+              onChange={this.handleChange}
+              sx={{marginRight: '10px', width: '65%'}}
+              onKeyPress={this.onTodoItemClicked}
+            />
+            <Button variant="contained" onClick={this.handleSubmit} sx={{height: '55px'}}>Submit</Button>
           </form>
         }
         <EditDialog openPopup={this.state.openPopup} selectedTask={this.state.selectedTask} onClick={this.onTodoItemClicked} />
