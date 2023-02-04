@@ -10,10 +10,10 @@ export default class TodoBox extends React.Component {
 
     let { todo, onClick, status, sidebar } = this.props
 
-    let task;
+    let task
+    let textColor
     const now = new Date().toLocaleDateString()
     const taskDate = new Date(todo.date)
-    let textColor
 
     if (todo.date === now) {
       textColor = 'green'

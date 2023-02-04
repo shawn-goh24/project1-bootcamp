@@ -36,23 +36,6 @@ export default class Content extends React.Component {
       })
     }
   }
-
-  onAddTask = (e) => {
-    console.log(e.keyCode)
-    if (this.state.wordInput !== '') {
-      const newTodos = {
-        id: this.state.list[this.state.list.length - 1].id + 1,
-        title: this.state.wordInput,
-        completed: false,
-        deleted: false,
-        date: new Date().toLocaleDateString()
-      };
-      this.setState({
-        list: [...this.state.list, newTodos],
-        wordInput: ''
-      })
-    }
-  }
   
   handleChange = (e) => {
     let { value } = e.target
@@ -78,7 +61,6 @@ export default class Content extends React.Component {
         list: newTodos
       })
     } else if (selected === 'done') {
-      console.log("Done editting")
       const newTodos = [...this.state.list]
       const todo = newTodos.find((todo) => todo.id === id)
       todo.title = newTitle
@@ -90,13 +72,11 @@ export default class Content extends React.Component {
         list: newTodos
       })
     } else if (selected === 'cancel') {
-      console.log("Cancel dialog")
       this.setState({
         openPopup: false,
       })
     } 
     else if (selected === 'edit') {
-      console.log("Edit task")
       const newTodos = [...this.state.list]
       const todo = newTodos.find((todo) => todo.id === id)
       this.setState({
@@ -228,8 +208,6 @@ export default class Content extends React.Component {
     })
 
     return today
-
-    
   }
 
 
