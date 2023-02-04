@@ -1,6 +1,15 @@
-# Rocket Academy Coding Bootcamp: Project 1: Frontend App
+# Rocket Academy Coding Bootcamp: Project 1: Frontend App (Todo list)
 
 https://bc.rocketacademy.co/1-frontend/1.p-frontend-app
+
+## Description
+
+A simple Todo List application to keep track on daily tasks. Sample task are added into the application.
+Able to add, delete and edit tasks. Dates are also available to keep track on tasks that are due
+
+## Sample Images
+
+![alt text](./public/img.png)
 
 ## Available Scripts
 
