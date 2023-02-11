@@ -1,6 +1,6 @@
 # Rocket Academy Coding Bootcamp: Project 1: Frontend App (Todo list)
 
-https://bc.rocketacademy.co/1-frontend/1.p-frontend-app
+https://shawn-goh24.github.io/project1-bootcamp/
 
 ## Description
 
