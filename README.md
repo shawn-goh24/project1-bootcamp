@@ -13,7 +13,7 @@ A simple todo list application to keep track on daily tasks.
 2. Search tasks
 3. View tasks based on selected drawers
 
-![Todo](./asset/todo-gif.gif)
+![Todo](./assets/todo-gif.gif)
 
 _Sample tasks are added into the application._
 
